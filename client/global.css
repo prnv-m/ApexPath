@@ -1,0 +1,111 @@
+/** @import must precede all other statements */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /**
+   * Tailwind CSS theme
+   * tailwind.config.ts expects the following color variables to be expressed as HSL values.
+   * A different format will require also updating the theme in tailwind.config.ts.
+  */
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 224 71% 5%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 224 71% 5%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71% 5%;
+
+    /* Lagoon (aqua/teal) brand */
+    --primary: 188 90% 36%;
+    --primary-foreground: 188 100% 96%;
+
+    --secondary: 188 45% 92%;
+    --secondary-foreground: 224 71% 5%;
+
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+
+    --accent: 171 55% 90%;
+    --accent-foreground: 224 71% 5%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 200 30% 90%;
+    --input: 200 30% 90%;
+    --ring: 188 90% 36%;
+
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5% 26%;
+    --sidebar-primary: 188 90% 36%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 188 45% 92%;
+    --sidebar-accent-foreground: 240 6% 10%;
+    --sidebar-border: 200 30% 90%;
+    --sidebar-ring: 188 90% 36%;
+  }
+
+  .dark {
+    --background: 222 84% 5%;
+    --foreground: 188 100% 96%;
+
+    --card: 222 84% 5%;
+    --card-foreground: 188 100% 96%;
+
+    --popover: 222 84% 5%;
+    --popover-foreground: 188 100% 96%;
+
+    --primary: 188 90% 45%;
+    --primary-foreground: 188 100% 96%;
+
+    --secondary: 222 32% 14%;
+    --secondary-foreground: 188 100% 96%;
+
+    --muted: 222 32% 14%;
+    --muted-foreground: 188 15% 70%;
+
+    --accent: 222 32% 14%;
+    --accent-foreground: 188 100% 96%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 188 100% 96%;
+
+    --border: 222 32% 14%;
+    --input: 222 32% 14%;
+    --ring: 188 90% 45%;
+    --sidebar-background: 222 35% 9%;
+    --sidebar-foreground: 188 100% 96%;
+    --sidebar-primary: 188 90% 45%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 222 24% 12%;
+    --sidebar-accent-foreground: 188 100% 96%;
+    --sidebar-border: 222 24% 12%;
+    --sidebar-ring: 188 90% 45%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Animation utilities */
+@layer utilities {
+  @keyframes fade-up { from { opacity: 0; transform: translateY(12px);} to { opacity: 1; transform: translateY(0);} }
+  .animate-fade-up { animation: fade-up 700ms ease-out both; }
+  @keyframes shimmer { 0% {background-position: 0% 50%} 100% {background-position: 200% 50%} }
+  .animate-shimmer { background-size: 200% 100%; animation: shimmer 3s linear infinite; }
+}

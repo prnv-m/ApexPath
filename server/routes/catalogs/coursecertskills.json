@@ -77,7 +77,7 @@
     "title": "IBM Project Manager Professional Certificate",
     "description": "Learn comprehensive project management through IBM Project Manager Professional Certificate. Master project coordination, progress monitoring, and stakeholder management.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/ibm-project-manager-professional-certificate"
+    "url": "https://www.coursera.org/professional-certificates/ibm-project-manager"
   },
   {
     "id": "006e4457",
@@ -93,7 +93,7 @@
     "title": "Scrum Master Certification Prep",
     "description": "Learn comprehensive project management through Scrum Master Certification Prep. Master project coordination, progress monitoring, and stakeholder management.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/scrum-master-certification-prep"
+    "url": "https://www.coursera.org/specializations/learnquest-certified-scrum-master"
   },
   {
     "id": "2a078c70",
@@ -101,7 +101,7 @@
     "title": "Project Management Fundamentals",
     "description": "Learn comprehensive project management through Project Management Fundamentals. Master project coordination, progress monitoring, and stakeholder management.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/project-management-fundamentals"
+    "url": "https://www.coursera.org/learn/fundamentals-of-project-planning-and-management"
   },
   {
     "id": "b4fd3bc9",
@@ -109,7 +109,7 @@
     "title": "Risk Management in Projects",
     "description": "Learn comprehensive project management through Risk Management in Projects. Master project coordination, progress monitoring, and stakeholder management.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/risk-management-in-projects"
+    "url": "https://www.coursera.org/learn/project-risk-management"
   },
   {
     "id": "c1655e07",
@@ -117,7 +117,7 @@
     "title": "Project Leadership and Communication",
     "description": "Learn comprehensive project management through Project Leadership and Communication. Master project coordination, progress monitoring, and stakeholder management.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/project-leadership-and-communication"
+    "url": "https://www.coursera.org/learn/project-management-capstone"
   },
   {
     "id": "26bd2ce3",
@@ -149,7 +149,7 @@
     "title": "Google Cloud Platform Fundamentals",
     "description": "Gain expertise in cloud services and solutions through Google Cloud Platform Fundamentals. Learn cloud infrastructure, security, and deployment strategies.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/professional-certificates/gcp-cloud-engineer"
+    "url": "https://www.coursera.org/professional-certificates/cloud-engineering-gcp"
   },
   {
     "id": "74021e8c",
@@ -157,7 +157,7 @@
     "title": "Cloud Computing Concepts",
     "description": "Gain expertise in cloud services and solutions through Cloud Computing Concepts. Learn cloud infrastructure, security, and deployment strategies.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/cloud-computing-concepts"
+    "url": "https://www.coursera.org/learn/cloud-computing"
   },
   {
     "id": "690b3f77",
@@ -165,7 +165,7 @@
     "title": "VMware vSphere Fundamentals",
     "description": "Gain expertise in cloud services and solutions through VMware vSphere Fundamentals. Learn cloud infrastructure, security, and deployment strategies.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/vmware-vsphere-fundamentals"
+    "url": "https://www.coursera.org/learn/vmware-vsphere-install-configure-manage"
   },
   {
     "id": "5fe00492",
@@ -181,7 +181,7 @@
     "title": "Cloud Security Fundamentals",
     "description": "Gain expertise in cloud services and solutions through Cloud Security Fundamentals. Learn cloud infrastructure, security, and deployment strategies.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/cloud-security-fundamentals"
+    "url": "https://www.coursera.org/learn/cloud-security-basics"
   },
   {
     "id": "f35b4060",
@@ -189,7 +189,7 @@
     "title": "Multi-Cloud Architecture",
     "description": "Gain expertise in cloud services and solutions through Multi-Cloud Architecture. Learn cloud infrastructure, security, and deployment strategies.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/multi-cloud-architecture"
+    "url": "https://www.coursera.org/learn/foundation-to-multi-cloud"
   },
   {
     "id": "0f7e95e5",
@@ -229,7 +229,7 @@
     "title": "Cybersecurity Operations Fundamentals",
     "description": "Develop cybersecurity expertise through Cybersecurity Operations Fundamentals. Learn security implementation, vulnerability assessment, and incident response.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/cybersecurity-operations-fundamentals"
+    "url": "https://www.coursera.org/specializations/cbrops"
   },
   {
     "id": "693361e3",
@@ -237,7 +237,7 @@
     "title": "Incident Response and Forensics",
     "description": "Develop cybersecurity expertise through Incident Response and Forensics. Learn security implementation, vulnerability assessment, and incident response.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/incident-response-and-forensics"
+    "url": "https://www.coursera.org/learn/incident-response-digital-forensics"
   },
   {
     "id": "8386dc25",
@@ -245,7 +245,7 @@
     "title": "Ethical Hacking Essentials",
     "description": "Develop cybersecurity expertise through Ethical Hacking Essentials. Learn security implementation, vulnerability assessment, and incident response.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/ethical-hacking-essentials"
+    "url": "https://www.coursera.org/learn/ethical-hacking-introduction"
   },
   {
     "id": "d56364ae",
@@ -269,7 +269,7 @@
     "title": "Database Management Essentials",
     "description": "Develop database management skills through Database Management Essentials. This comprehensive course covers key concepts and practical applications in database management.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/database-management-essentials"
+    "url": "https://www.coursera.org/learn/database-management"
   },
   {
     "id": "afa62344",
@@ -285,7 +285,7 @@
     "title": "Oracle Database Fundamentals",
     "description": "Develop database management skills through Oracle Database Fundamentals. This comprehensive course covers key concepts and practical applications in database management.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/oracle-database-fundamentals"
+    "url": "https://www.coursera.org/learn/oracle-sql-databases"
   },
   {
     "id": "6c5f7fe7",
@@ -301,7 +301,7 @@
     "title": "Data Warehouse Concepts",
     "description": "Develop database management skills through Data Warehouse Concepts. This comprehensive course covers key concepts and practical applications in database management.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/data-warehouse-concepts"
+    "url": "https://www.coursera.org/learn/dwdesign"
   },
   {
     "id": "79ffdfcd",
@@ -309,7 +309,7 @@
     "title": "Database Design and Modeling",
     "description": "Develop database management skills through Database Design and Modeling. This comprehensive course covers key concepts and practical applications in database management.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/database-design-and-modeling"
+    "url": "https://www.coursera.org/learn/database-design"
   },
   {
     "id": "b1598f50",
@@ -317,7 +317,7 @@
     "title": "Computer Networks and Internet Protocol",
     "description": "Develop networking skills through Computer Networks and Internet Protocol. This comprehensive course covers key concepts and practical applications in networking.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/computer-networks-and-internet-protocol"
+    "url": "https://www.coursera.org/learn/computer-networking"
   },
   {
     "id": "13e61d72",
@@ -325,7 +325,7 @@
     "title": "Cisco Networking Academy",
     "description": "Develop networking skills through Cisco Networking Academy. This comprehensive course covers key concepts and practical applications in networking.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/cisco-networking-academy"
+    "url": "https://www.coursera.org/learn/introduction-to-networking"
   },
   {
     "id": "a0dd9990",
@@ -341,7 +341,7 @@
     "title": "Network Security Fundamentals",
     "description": "Develop networking skills through Network Security Fundamentals. This comprehensive course covers key concepts and practical applications in networking.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/network-security-fundamentals"
+    "url": "https://www.coursera.org/learn/network-security"
   },
   {
     "id": "068f8158",
@@ -349,7 +349,7 @@
     "title": "TCP/IP and Advanced Topics",
     "description": "Develop networking skills through TCP/IP and Advanced Topics. This comprehensive course covers key concepts and practical applications in networking.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/tcp-ip-and-advanced-topics"
+    "url": "https://www.coursera.org/learn/tcp-ip-protocol"
   },
   {
     "id": "01567dea",
@@ -357,7 +357,7 @@
     "title": "Wireless Communication Systems",
     "description": "Develop networking skills through Wireless Communication Systems. This comprehensive course covers key concepts and practical applications in networking.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/wireless-communication-systems"
+    "url": "https://www.coursera.org/learn/wireless-communication-emerging-technologies"
   },
   {
     "id": "8ba20b40",
@@ -365,7 +365,7 @@
     "title": "Network Infrastructure Design",
     "description": "Develop networking skills through Network Infrastructure Design. This comprehensive course covers key concepts and practical applications in networking.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/network-infrastructure-design"
+    "url": "https://www.coursera.org/learn/network-protocols"
   },
   {
     "id": "643f49da",
@@ -389,7 +389,7 @@
     "title": "Web Development with HTML/CSS/JavaScript",
     "description": "Develop software development skills through Web Development with HTML/CSS/JavaScript. This comprehensive course covers key concepts and practical applications in software development.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/specializations/java-programming"
+    "url": "https://www.coursera.org/specializations/web-design"
   },
   {
     "id": "10715bcc",
@@ -397,7 +397,7 @@
     "title": "Mobile App Development",
     "description": "Develop software development skills through Mobile App Development. This comprehensive course covers key concepts and practical applications in software development.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/mobile-app-development"
+    "url": "https://www.coursera.org/specializations/android-app-development"
   },
   {
     "id": "9cde29de",
@@ -405,7 +405,7 @@
     "title": "Software Engineering Principles",
     "description": "Develop software development skills through Software Engineering Principles. This comprehensive course covers key concepts and practical applications in software development.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/software-engineering-principles"
+    "url": "https://www.coursera.org/learn/software-engineering-fundamentals"
   },
   {
     "id": "9ef3fcb1",
@@ -413,7 +413,7 @@
     "title": "Object-Oriented Programming",
     "description": "Develop software development skills through Object-Oriented Programming. This comprehensive course covers key concepts and practical applications in software development.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/object-oriented-programming"
+    "url": "https://www.coursera.org/specializations/object-oriented-programming-s12n"
   },
   {
     "id": "d7e0425d",
@@ -421,7 +421,7 @@
     "title": "Full Stack Web Development",
     "description": "Develop software development skills through Full Stack Web Development. This comprehensive course covers key concepts and practical applications in software development.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/full-stack-web-development"
+    "url": "https://www.coursera.org/specializations/full-stack-web-development"
   },
   {
     "id": "a5fdc57a",
@@ -477,7 +477,7 @@
     "title": "Red Hat Certified System Administrator Prep",
     "description": "Develop system administration skills through Red Hat Certified System Administrator Prep. This comprehensive course covers key concepts and practical applications in system administration.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/red-hat-certified-system-administrator-prep"
+    "url": "https://www.coursera.org/learn/red-hat-enterprise-linux"
   },
   {
     "id": "6cfb73f3",
@@ -485,7 +485,7 @@
     "title": "VMware vSphere Fundamentals",
     "description": "Develop system administration skills through VMware vSphere Fundamentals. This comprehensive course covers key concepts and practical applications in system administration.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/vmware-vsphere-fundamentals"
+    "url": "https://www.coursera.org/learn/vmware-vsphere-install-configure-manage"
   },
   {
     "id": "7908c735",
@@ -517,7 +517,7 @@
     "title": "CI/CD Pipeline Implementation",
     "description": "Develop DevOps skills through CI/CD Pipeline Implementation. This comprehensive course covers key concepts and practical applications in DevOps.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/ci-cd-pipeline-implementation"
+    "url": "https://www.coursera.org/learn/devops-capstone"
   },
   {
     "id": "2f22083f",
@@ -533,7 +533,7 @@
     "title": "IBM DevOps and Software Engineering",
     "description": "Develop DevOps skills through IBM DevOps and Software Engineering. This comprehensive course covers key concepts and practical applications in DevOps.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/ibm-devops-and-software-engineering"
+    "url": "https://www.coursera.org/professional-certificates/devops-and-software-engineering"
   },
   {
     "id": "3164f314",
@@ -541,7 +541,7 @@
     "title": "Introduction to Git and GitHub",
     "description": "Develop DevOps skills through Introduction to Git and GitHub. This comprehensive course covers key concepts and practical applications in DevOps.",
     "provider": "Coursera",
-    "url": "https://www.coursera.org/learn/introduction-to-git-and-github"
+    "url": "https://www.coursera.org/learn/introduction-git-github"
   },
   {
     "id": "35179325",

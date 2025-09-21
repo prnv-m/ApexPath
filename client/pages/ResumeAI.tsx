@@ -1,6 +1,6 @@
 import Header from "@/components/site/Header";
 import Footer from "@/components/site/Footer";
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import type { RecommendationResponse } from "@shared/api";
 
 // Extended type to include ATS properties
@@ -40,7 +40,16 @@ const ExpandableCard = ({ item, index }: { item: any; index: number }) => {
     }
     return 'from-teal-50 to-cyan-50 border-teal-200 hover:shadow-teal-200/50';
   };
-
+  const base64ToFile = (base64: string, filename: string, mimeType: string): File => {
+    const byteCharacters = atob(base64);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: mimeType });
+    return new File([blob], filename, { type: mimeType });
+  };
   const getTypeLabel = (title) => {
     const titleLower = title.toLowerCase();
     if (titleLower.includes('certif')) return 'CERTIFICATION';
@@ -54,7 +63,15 @@ const ExpandableCard = ({ item, index }: { item: any; index: number }) => {
     if (titleLower.includes('project') || titleLower.includes('build')) return 'bg-blue-100 text-blue-700';
     return 'bg-teal-100 text-teal-700';
   };
-
+    interface ResumeAiPayload {
+    jobDescription: string;
+    resume: {
+      type: 'text' | 'file';
+      content: string; // Will be raw text or base64 string
+      fileName?: string;
+      mimeType?: string;
+    };
+  }
   return (
     <div 
       className={`bg-gradient-to-r ${getGradient(item.title)} border-2 rounded-xl transition-all duration-300 hover:shadow-lg hover:scale-[1.02] animate-fadeInUp opacity-0`}
@@ -201,7 +218,39 @@ export default function ResumeAI() {
       new Uint8Array(arrayBuffer).reduce((data, byte) => data + String.fromCharCode(byte), "")
     );
   };
+ useEffect(() => {
+    const payloadString = localStorage.getItem('resumeAiRedirectPayload');
+    
+    if (payloadString) {
+      try {
+        const payload: ResumeAiPayload = JSON.parse(payloadString);
+        
+        // Populate the job description field
+        setJobDescription(payload.jobDescription);
+        
+        // Handle the resume data
+        if (payload.resume.type === 'file' && payload.resume.fileName && payload.resume.mimeType) {
+          const file = base64ToFile(payload.resume.content, payload.resume.fileName, payload.resume.mimeType);
+          setResumeFile(file);
+        } else if (payload.resume.type === 'text') {
+          // If it's text, we can create a temporary file to represent it
+          const blob = new Blob([payload.resume.content], { type: 'text/plain' });
+          const file = new File([blob], "resume_from_text.txt", { type: 'text/plain' });
+          setResumeFile(file);
+        }
+        
+        toast.success("Resume and Job Description have been auto-filled!");
 
+        // IMPORTANT: Clean up localStorage so this doesn't run again on a refresh
+        localStorage.removeItem('resumeAiRedirectPayload');
+      } catch (error) {
+        console.error("Failed to parse redirect payload:", error);
+        toast.error("Could not load data from previous page.");
+        // Clean up in case of error
+        localStorage.removeItem('resumeAiRedirectPayload');
+      }
+    }
+  }, []);
   // Generate recommendations
   const generateRecommendations = async () => {
     if (!resumeFile) {
@@ -499,3 +548,4 @@ export default function ResumeAI() {
     </>
   );
 }
+

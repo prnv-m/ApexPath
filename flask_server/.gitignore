@@ -2,7 +2,8 @@
 models/*
 data/*
 *.npy
-*.plk
+*.pkl
+
 job_embeddings.npy
 processed_jobs.pkl
 # Logs

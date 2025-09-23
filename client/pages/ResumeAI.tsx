@@ -15,7 +15,26 @@ import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import ReactMarkdown from "react-markdown";
 import { ChevronDown, ChevronUp, Clock, ExternalLink, BookOpen, Award, Briefcase, Target, FileText, Star, CheckCircle, Upload, Sparkles, TrendingUp } from "lucide-react";
+const base64ToFile = (base64: string, filename: string, mimeType: string): File => {
+  const byteCharacters = atob(base64);
+  const byteNumbers = new Array(byteCharacters.length);
+  for (let i = 0; i < byteCharacters.length; i++) {
+    byteNumbers[i] = byteCharacters.charCodeAt(i);
+  }
+  const byteArray = new Uint8Array(byteNumbers);
+  const blob = new Blob([byteArray], { type: mimeType });
+  return new File([blob], filename, { type: mimeType });
+};
 
+interface ResumeAiPayload {
+  jobDescription: string;
+  resume: {
+    type: 'text' | 'file';
+    content: string; // Will be raw text or base64 string
+    fileName?: string;
+    mimeType?: string;
+  };
+}
 const ExpandableCard = ({ item, index }: { item: any; index: number }) => {
   const [isExpanded, setIsExpanded] = useState(false);
   
@@ -211,50 +230,45 @@ export default function ResumeAI() {
   const [result, setResult] = useState<ExtendedRecommendationResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  // Convert PDF to Base64
-  const fileToBase64 = async (file: File) => {
-    const arrayBuffer = await file.arrayBuffer();
-    return btoa(
-      new Uint8Array(arrayBuffer).reduce((data, byte) => data + String.fromCharCode(byte), "")
-    );
-  };
- useEffect(() => {
+  // This useEffect will now work correctly because `base64ToFile` and `ResumeAiPayload` are in scope.
+  useEffect(() => {
     const payloadString = localStorage.getItem('resumeAiRedirectPayload');
     
     if (payloadString) {
       try {
         const payload: ResumeAiPayload = JSON.parse(payloadString);
         
-        // Populate the job description field
         setJobDescription(payload.jobDescription);
         
-        // Handle the resume data
         if (payload.resume.type === 'file' && payload.resume.fileName && payload.resume.mimeType) {
           const file = base64ToFile(payload.resume.content, payload.resume.fileName, payload.resume.mimeType);
           setResumeFile(file);
         } else if (payload.resume.type === 'text') {
-          // If it's text, we can create a temporary file to represent it
           const blob = new Blob([payload.resume.content], { type: 'text/plain' });
           const file = new File([blob], "resume_from_text.txt", { type: 'text/plain' });
           setResumeFile(file);
         }
         
         toast.success("Resume and Job Description have been auto-filled!");
-
-        // IMPORTANT: Clean up localStorage so this doesn't run again on a refresh
         localStorage.removeItem('resumeAiRedirectPayload');
       } catch (error) {
         console.error("Failed to parse redirect payload:", error);
         toast.error("Could not load data from previous page.");
-        // Clean up in case of error
         localStorage.removeItem('resumeAiRedirectPayload');
       }
     }
   }, []);
-  // Generate recommendations
+
+  const fileToBase64 = async (file: File) => {
+    const arrayBuffer = await file.arrayBuffer();
+    return btoa(
+      new Uint8Array(arrayBuffer).reduce((data, byte) => data + String.fromCharCode(byte), "")
+    );
+  };
+
   const generateRecommendations = async () => {
     if (!resumeFile) {
-      toast.error("Please upload a resume PDF");
+      toast.error("Please upload a resume file");
       return;
     }
 
@@ -263,13 +277,9 @@ export default function ResumeAI() {
 
     try {
       const base64Resume = await fileToBase64(resumeFile);
-      
-      // Replace this with your actual API endpoint
       const response = await fetch("/api/recommendations", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           resume: base64Resume,
           jobDescription,

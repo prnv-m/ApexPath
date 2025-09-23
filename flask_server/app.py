@@ -14,6 +14,7 @@ import base64
 import io
 from PyPDF2 import PdfReader
 import pickle # Required for loading the saved TF-IDF vectorizer
+from thefuzz import fuzz
 
 # --- INITIAL SETUP: NLTK Data Check ---
 try:
@@ -185,7 +186,63 @@ def explain_match():
 
     return jsonify({"matchingKeywords": matching_keywords})
 
+import math
 
+@app.route('/search-jobs', methods=['GET'])
+def search_jobs():
+    """
+    Performs a fuzzy search for jobs based on a title query and location, with pagination.
+    Accepts 'query', 'location', and 'page' as URL parameters.
+    e.g., /search-jobs?query=python dev&location=delhi&page=1
+    """
+    query = request.args.get('query', '').lower()
+    location = request.args.get('location', '').lower()
+    try:
+        page = int(request.args.get('page', 1))
+    except ValueError:
+        page = 1
+    
+    results_per_page = 10
+
+    if not query and not location:
+        return jsonify({"error": "Please provide a search query or a location."}), 400
+
+    # Start with the full dataset of jobs
+    results_df = job_descriptions.copy()
+
+    # 1. Filter by location (if provided)
+    if location:
+        # Using .str.contains for a fast, simple "fuzzy" location match
+        results_df = results_df[results_df['location'].str.lower().str.contains(location, na=False)]
+
+    # 2. Perform fuzzy search on the title (if provided)
+    if query:
+        # thefuzz.partial_ratio is great for matching "python dev" to "Senior Python Developer"
+        # We calculate a score for each job title against the query.
+        results_df['match_score'] = results_df['title'].apply(
+            lambda title: fuzz.partial_ratio(query, str(title).lower())
+        )
+        # Filter out jobs with a low match score and sort by the best matches
+        results_df = results_df[results_df['match_score'] > 70].sort_values(
+            by='match_score', ascending=False
+        )
+    
+    # 3. Paginate the results
+    total_results = len(results_df)
+    total_pages = math.ceil(total_results / results_per_page)
+    start_index = (page - 1) * results_per_page
+    end_index = start_index + results_per_page
+    paginated_df = results_df.iloc[start_index:end_index]
+    
+    # 4. Format and return the results
+    search_results = paginated_df.to_dict('records')
+
+    return jsonify({
+        "results": search_results,
+        "totalResults": total_results,
+        "totalPages": total_pages,
+        "currentPage": page
+    })
 # --- MAIN EXECUTION ---
 if __name__ == '__main__':
     app.run(debug=True, port=5001)

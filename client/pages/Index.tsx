@@ -5,9 +5,27 @@ import CTAButton from "@/components/site/CTAButton";
 import MatchPreviewCard from "@/components/site/MatchPreviewCard";
 import ResumePreviewCard from "@/components/site/ResumePreviewCard";
 import { Check, X } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export default function Index() {
+  const navigate = useNavigate();
+  const [query, setQuery] = useState("");
+  const [location, setLocation] = useState("");
+  const [experience, setExperience] = useState("any");
+
+  const handleSearch = () => {
+    const params = new URLSearchParams();
+    let searchQuery = query;
+    if (experience === 'senior') {
+      searchQuery = query ? `senior ${query}` : 'senior';
+    }
+    
+    if (searchQuery) params.append("query", searchQuery);
+    if (location) params.append("location", location);
+    navigate(`/search?${params.toString()}`);
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
@@ -111,12 +129,30 @@ export default function Index() {
         <section className="container mx-auto pb-16">
           <div className="rounded-3xl bg-secondary p-6 md:p-10">
             <h2 className="text-3xl md:text-5xl font-extrabold tracking-tight mb-6">FIND YOUR PERFECT JOB IN A CLICK!</h2>
-            <div className="grid md:grid-cols-5 gap-3">
-              <input placeholder="Job Title" className="h-12 rounded-full px-4 border" />
-              <select className="h-12 rounded-full px-4 border"><option>Work Model</option><option>Remote</option><option>Hybrid</option><option>Onsite</option></select>
-              <input placeholder="City" className="h-12 rounded-full px-4 border" />
-              <select className="h-12 rounded-full px-4 border"><option>Experience Level</option><option>Junior</option><option>Mid</option><option>Senior</option></select>
-              <CTAButton to="/job-seekers" variant="dark">GO</CTAButton>
+            <div className="grid md:grid-cols-4 gap-3">
+              <input 
+                placeholder="Job Title" 
+                className="h-12 rounded-full px-4 border" 
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+              />
+              <input 
+                placeholder="City" 
+                className="h-12 rounded-full px-4 border" 
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+              />
+              <select 
+                className="h-12 rounded-full px-4 border"
+                value={experience}
+                onChange={(e) => setExperience(e.target.value)}
+              >
+                <option value="any">Any Experience</option>
+                <option value="junior">Junior</option>
+                <option value="mid">Mid</option>
+                <option value="senior">Senior</option>
+              </select>
+              <CTAButton onClick={handleSearch} variant="dark">GO</CTAButton>
             </div>
           </div>
         </section>

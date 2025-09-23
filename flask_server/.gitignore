@@ -1,6 +1,9 @@
 .env
 models/*
 data/*
+*.npy
+*.plk
+job_embeddings.npy
 processed_jobs.pkl
 # Logs
 logs

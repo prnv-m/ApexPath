@@ -13,6 +13,7 @@ from nltk import pos_tag
 import base64
 import io
 from PyPDF2 import PdfReader
+import pickle # Required for loading the saved TF-IDF vectorizer
 
 # --- INITIAL SETUP: NLTK Data Check ---
 try:
@@ -29,7 +30,7 @@ app = Flask(__name__)
 CORS(app)
 
 
-# --- HELPER FUNCTIONS ---
+# --- HELPER FUNCTIONS (No changes needed here) ---
 def preprocess_text(text):
     """
     Cleans, tokenizes, and filters text to extract meaningful keywords.
@@ -68,17 +69,13 @@ def get_resume_text_from_request(data):
     if not data:
         return None
 
-    # Case 1: Plain text is provided
     if 'resume_text' in data and data['resume_text']:
         return data['resume_text']
-
-    # Case 2: A Base64 encoded file is provided
     elif 'file_base64' in data and data['file_base64']:
         try:
             decoded_bytes = base64.b64decode(data['file_base64'])
             mime_type = data.get('mime_type', '')
             text = ""
-
             if 'pdf' in mime_type:
                 pdf_file = io.BytesIO(decoded_bytes)
                 reader = PdfReader(pdf_file)
@@ -87,45 +84,70 @@ def get_resume_text_from_request(data):
             elif 'text' in mime_type:
                 text = decoded_bytes.decode('utf-8')
             else:
-                return None  # Unsupported type
+                return None
             return text
         except Exception as e:
             print(f"Error processing Base64 file: {e}")
             return None
-    
     return None
 
 
-# --- GLOBAL VARIABLES & FAST DATA LOADING ---
+# --- UPDATED GLOBAL VARIABLES & DATA LOADING FOR HYBRID MODEL ---
 print("--- Server Startup Sequence ---")
+
+# Load the Word2Vec model
 print("1. Loading Word2Vec model...")
-model = Word2Vec.load(os.path.join('models', 'resume_word2vec.model'))
-print("   ...Word2Vec model loaded.")
+w2v_model = Word2Vec.load(os.path.join('models', 'resume_word2vec.model'))
 
-print("2. Loading pre-computed job data and embeddings...")
+# Load the TF-IDF vectorizer
+print("2. Loading TF-IDF model...")
+with open('tfidf_vectorizer.pkl', 'rb') as f:
+    tfidf_vectorizer = pickle.load(f)
+
+# Load the main job data DataFrame
+print("3. Loading pre-computed job data and all embeddings...")
 job_descriptions = pd.read_pickle("processed_jobs.pkl")
-job_description_embeddings = np.load("job_embeddings.npy")
-print(f"   ...Loaded {len(job_descriptions)} jobs and embeddings instantly.")
 
-print("--- Startup Complete. Server is ready to accept requests. ---")
+# Load the pre-calculated embeddings for both models
+job_embeddings_w2v = np.load("job_embeddings_w2v.npy")
+job_embeddings_tfidf = np.load("job_embeddings_tfidf.npy")
+print(f"   ...Loaded {len(job_descriptions)} jobs and embeddings for both models.")
+
+print("--- Startup Complete. Server is ready. ---")
 
 
-# --- API ENDPOINT 1: Match Jobs ---
+# --- API ENDPOINT 1: Match Jobs (UPDATED with HYBRID scoring) ---
 @app.route('/match-jobs', methods=['POST'])
 def match_jobs():
     """
-    Finds the top 5 job descriptions that match the provided resume.
+    Finds top 5 job matches using a hybrid of TF-IDF and Word2Vec scores.
     """
     data = request.get_json()
     resume_text = get_resume_text_from_request(data)
-
     if not resume_text:
-        return jsonify({"error": "Missing or invalid resume data in request"}), 400
+        return jsonify({"error": "Missing or invalid resume data"}), 400
 
     preprocessed_resume = preprocess_text(resume_text)
-    resume_embedding = document_embedding(preprocessed_resume, model).reshape(1, -1)
-    similarity_scores = cosine_similarity(resume_embedding, job_description_embeddings)[0]
-    top_5_indices = np.argsort(similarity_scores)[-5:][::-1]
+
+    # --- Score Calculation for Both Models ---
+    
+    # 1. Word2Vec Score (Semantic Similarity)
+    resume_embedding_w2v = document_embedding(preprocessed_resume, w2v_model).reshape(1, -1)
+    w2v_scores = cosine_similarity(resume_embedding_w2v, job_embeddings_w2v)[0]
+
+    # 2. TF-IDF Score (Keyword Similarity)
+    resume_embedding_tfidf = tfidf_vectorizer.transform([preprocessed_resume])
+    tfidf_scores = cosine_similarity(resume_embedding_tfidf, job_embeddings_tfidf)[0]
+
+    # --- Hybrid Score Calculation ---
+    # These weights can be tuned. Giving more weight to TF-IDF emphasizes direct keyword matches.
+    w_tfidf = 0.6
+    w_w2v = 0.4
+    
+    hybrid_scores = (w_tfidf * tfidf_scores) + (w_w2v * w2v_scores)
+
+    # Get top 5 indices based on the new hybrid score
+    top_5_indices = np.argsort(hybrid_scores)[-5:][::-1]
     
     results = []
     for i in top_5_indices:
@@ -135,16 +157,17 @@ def match_jobs():
             "title": job_info['title'],
             "companyName": job_info['company_name'],
             "description": job_info['description'],
-            "similarityScore": float(similarity_scores[i])
+            # Send the final hybrid score to the frontend for display
+            "similarityScore": float(hybrid_scores[i]) 
         })
     return jsonify(results)
 
 
-# --- API ENDPOINT 2: Explain Match ---
+# --- API ENDPOINT 2: Explain Match (No changes needed, logic is still perfect) ---
 @app.route('/explain-match', methods=['POST'])
 def explain_match():
     """
-    Explains a match by finding common keywords between a resume and a job description.
+    Explains a match by finding common keywords, which aligns with the TF-IDF model's strengths.
     """
     data = request.get_json()
     
@@ -165,5 +188,4 @@ def explain_match():
 
 # --- MAIN EXECUTION ---
 if __name__ == '__main__':
-    # Use port 5001 to avoid conflicts with other development servers
     app.run(debug=True, port=5001)
